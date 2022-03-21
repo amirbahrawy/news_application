@@ -7,6 +7,8 @@ import '../shared/cubit/states.dart';
 
 
 class ScienceScreen extends StatelessWidget {
+  const ScienceScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppStates>(

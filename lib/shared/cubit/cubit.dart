@@ -20,13 +20,14 @@ class AppCubit extends Cubit<AppStates> {
     const BottomNavigationBarItem(icon: Icon(Icons.science), label: 'Science'),
   ];
   List<Widget> screens = [
-    BusinessScreen(),
-    SportsScreen(),
-    ScienceScreen(),
+    const BusinessScreen(),
+    const SportsScreen(),
+    const ScienceScreen(),
   ];
   List<dynamic> business = [];
   List<dynamic> sports = [];
   List<dynamic> science = [];
+  List<dynamic> search = [];
 
   AppCubit() : super(AppInitialState());
 
@@ -90,6 +91,19 @@ class AppCubit extends Cubit<AppStates> {
     } else {
       emit(AppGetScienceSuccessState());
     }
+  }
+  void getSearch(String value){
+    emit(AppGetSearchLoadingState());
+    search=[];
+    DioHelper.getData(url: 'v2/everything', query: {'q': value,'apiKey':Constants.API_KEY})
+        .then((value) {
+      science = value.data['articles'];
+      debugPrint(search[0]);
+      emit(AppGetSearchSuccessState());
+    }).catchError((error) {
+      debugPrint(error.toString());
+      emit(AppGetSearchErrorState(error.toString()));
+    });
   }
 
   void changeMode() {

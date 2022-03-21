@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_application/shared/components/components.dart';
 
+import '../modules/search.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
@@ -21,7 +23,9 @@ class HomeLayout extends StatelessWidget {
                   icon: const Icon(
                     Icons.search,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    navigateTo(context, SearchScreen());
+                  }),
               IconButton(
                   icon: const Icon(Icons.brightness_4_outlined), onPressed: () {AppCubit.get(context).changeMode();})
             ],

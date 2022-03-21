@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 Widget buildArticleItem(article) {
-  var image=article['urlToImage'];
-  if(image==null)
-    image='https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png';
+  var image = article['urlToImage'] ??=
+      'https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png';
   return Padding(
     padding: const EdgeInsets.all(15.0),
     child: Row(
@@ -14,14 +13,13 @@ Widget buildArticleItem(article) {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               image: DecorationImage(
-                  image: NetworkImage('$image'),
-                  fit: BoxFit.cover)),
+                  image: NetworkImage('$image'), fit: BoxFit.cover)),
         ),
         const SizedBox(
           width: 20.0,
         ),
         Expanded(
-          child:  Container(
+          child: SizedBox(
             height: 120.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,16 +43,45 @@ Widget buildArticleItem(article) {
     ),
   );
 }
-Widget articleBuilder(list){
+
+Widget articleBuilder(list) {
   if (list.isNotEmpty) {
-    return  ListView.separated(
+    return ListView.separated(
         itemBuilder: (context, index) => buildArticleItem(list[index]),
         separatorBuilder: (context, index) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15.0),
-          height: 1.0,
-          color: Colors.grey,
-        ),
+              margin: const EdgeInsets.symmetric(horizontal: 15.0),
+              height: 1.0,
+              color: Colors.grey,
+            ),
         itemCount: list.length);
   } else {
-    return const Center(child: CircularProgressIndicator());}
+    return const Center(child: CircularProgressIndicator());
+  }
 }
+
+void navigateTo(context, widget) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
+}
+Widget defaultFormField({
+  required TextEditingController controller,
+  required TextInputType type,
+  ValueChanged? onChange,
+  GestureTapCallback? onTap,
+  ValueChanged? onSubmit,
+  required FormFieldValidator<String> validate,
+  required String label,
+  required IconData prefix,
+}) =>
+    TextFormField(
+      controller: controller,
+      keyboardType: type,
+      onChanged: onChange,
+      onFieldSubmitted: onSubmit,
+      onTap: onTap,
+      validator: validate,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(prefix),
+        border: const OutlineInputBorder(),
+      ),
+    );

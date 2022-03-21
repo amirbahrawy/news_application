@@ -6,7 +6,7 @@ import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
 class BusinessScreen extends StatelessWidget {
-  const BusinessScreen({Key? key}) : super(key: key);
+   const BusinessScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
